@@ -51,7 +51,7 @@ def set_game_priority(mazo):
             # Primero se mira si la prioridad de la carta es la misma, en ese caso comparamos el valor de las cartas
             if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] == \
                     d.mazos[mazo_opt][d.players[j]["initialCard"]]["priority "]:
-                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["value"] > \
+                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["value"] < \
                         d.mazos[mazo_opt][d.players[j]["initialCard"]]["value"]:
                     d.context_game["game"][d.context_game["game"].index(i)], \
                     d.context_game["game"][d.context_game["game"].index(j)] = \
@@ -59,7 +59,7 @@ def set_game_priority(mazo):
                         d.context_game["game"][d.context_game["game"].index(i)]
             # Si la prioridad de la carta no es la misma, comparamos la prioridad
             else:
-                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] >\
+                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] <\
                         d.mazos[mazo_opt][d.players[j]["initialCard"]]["priority "]:
                     d.context_game["game"][d.context_game["game"].index(i)], \
                     d.context_game["game"][d.context_game["game"].index(j)] = \
@@ -67,8 +67,34 @@ def set_game_priority(mazo):
                         d.context_game["game"][d.context_game["game"].index(i)]
     # Le asignamos a cada jugador su prioridad basada en su posicion en la lista de jugadores
     for i in range (0, len(d.context_game["game"])):
-        d.players[d.context_game["game"][i]]["priority"] = i
+        d.players[d.context_game["game"][i]]["priority"] = len(d.context_game["game"] - 1)
+        # El que tiene mas prioridad (primero de la lista) es la banca
+        if i == 0:
+            d.players[d.context_game["game"][i]]["bank"] = True
+        else:
+            d.players[d.context_game["game"][i]]["bank"] = False
     # devolvemos la variable
     return mazo
+
+
+def reset_points():
+    # Establecemos en 20 los puntos de todos los jugadores
+    for i in d.context_game["game"]:
+        d.players[i]["points"] = 20
+
+
+def check_minimum_2_player_with_points():
+    # Establecemos un contador
+    count = 0
+    # Se recorre la lista de jugadores de la partida actual
+    for i in d.context_game["game"]:
+        # En caso de que los puntos de un jugador sean mayores a 0, se suma 1 al contador
+        if d.players[i]["points"] > 0:
+            count += 1
+    # En caso de que el contador sea mayor de 1 (minimo 2), se devuelve TRUE, si no se devuelve FALSE
+    if count > 1:
+        return True
+    else:
+        return False
 
 

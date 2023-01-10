@@ -1,5 +1,5 @@
 # Aqui guardamos los datos
-mazos = {"mazo_default": {
+mazo = {"mazo_default": {
     "B01": {"literal ": "As de Bastos", "value": 1, "priority ": 1, "realValue": 1},
     "B02": {"literal ": "Dos de Bastos", "value": 2, "priority ": 1, "realValue": 2},
     "B03": {"literal ": "Tres de Bastos", "value": 3, "priority ": 1, "realValue": 3},
@@ -162,3 +162,10 @@ menu_05 = ("*" * 140) + "\n" + \
                                  "10)  Average bet of the las round of each game.\n".rjust(96) + \
                                  "11)  Go back\n".rjust(61)
 menu_05_opt = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11')
+
+players_banner = ("*" * 140) + "\n" + (" " * 49) + "____   __\n" + \
+          (" " * 48) + "/ __ \ / /____ _ __  __ ___   _____ _____\n" + (" " * 47) + \
+          "/ /_/ // // __ `// / / // _ \ / ___// ___/\n" + (" " * 46) + \
+          "/ ____// // /_/ // /_/ //  __// /    \__\ \n" + (" " * 45) + \
+          "/_/    /_/ \__,_/ \__, / \___//_/   /____/\n" + \
+          (" " * 62) + "/____/" + "\n" + ("*" * 140) + "\n\n"

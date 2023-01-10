@@ -41,9 +41,9 @@ def barajar_mazo(mazo):
 
 def detector_mazo(mazo):
     # Se utiliza esta pequeña funcion para determinar con que mazo estamos trabajando
-    if mazo[0] in d.mazos["mazo_default"]:
+    if mazo[0] in d.mazo["mazo_default"]:
         return "mazo_default"
-    elif mazo[0] in d.mazos["mazo_1"]:
+    elif mazo[0] in d.mazo["mazo_1"]:
         return "mazo_1"
 
 
@@ -59,18 +59,18 @@ def set_game_priority(mazo):
     for i in d.context_game["game"]:
         for j in d.context_game["game"]:
             # Primero se mira si la prioridad de la carta es la misma, en ese caso comparamos el valor de las cartas
-            if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] == \
-                    d.mazos[mazo_opt][d.players[j]["initialCard"]]["priority "]:
-                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["value"] < \
-                        d.mazos[mazo_opt][d.players[j]["initialCard"]]["value"]:
+            if d.mazo[mazo_opt][d.players[i]["initialCard"]]["priority "] == \
+                    d.mazo[mazo_opt][d.players[j]["initialCard"]]["priority "]:
+                if d.mazo[mazo_opt][d.players[i]["initialCard"]]["value"] < \
+                        d.mazo[mazo_opt][d.players[j]["initialCard"]]["value"]:
                     d.context_game["game"][d.context_game["game"].index(i)], \
                     d.context_game["game"][d.context_game["game"].index(j)] = \
                         d.context_game["game"][d.context_game["game"].index(j)], \
                         d.context_game["game"][d.context_game["game"].index(i)]
             # Si la prioridad de la carta no es la misma, comparamos la prioridad
             else:
-                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] < \
-                        d.mazos[mazo_opt][d.players[j]["initialCard"]]["priority "]:
+                if d.mazo[mazo_opt][d.players[i]["initialCard"]]["priority "] < \
+                        d.mazo[mazo_opt][d.players[j]["initialCard"]]["priority "]:
                     d.context_game["game"][d.context_game["game"].index(i)], \
                     d.context_game["game"][d.context_game["game"].index(j)] = \
                         d.context_game["game"][d.context_game["game"].index(j)], \
@@ -106,3 +106,28 @@ def check_minimum_2_player_with_points():
         return True
     else:
         return False
+
+
+def check_conditions():
+    try:
+        if len(d.context_game["game"]) < 2:
+            raise ValueError("Set the players that compose the game first".rjust(97))
+        if len(d.mazo) == 0:
+            raise ValueError("Set the deck of cards first".rjust(82))
+        return
+    except ValueError as error:
+        print(error)
+        input("Press enter to continue".rjust(77))
+
+
+def create_human_player_name():
+    try:
+        name = input("Name: ".rjust(45))
+        if not name.isspace() or not name == "":
+            if not name.isalnum() and not name.isalpha() and not name.isdigit():
+                raise TypeError("Incorrect name, please, enter a name not empty with only letters.".rjust(104))
+        return name
+    except TypeError as error:
+        print(error)
+        input("Enter to continue".rjust(56))
+        return create_human_player_name()

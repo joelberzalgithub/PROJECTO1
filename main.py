@@ -36,7 +36,7 @@ while not flg_end:
     while flg_01:
         opt = f.menu(d.menu_01, d.menu_01_opt)
         if opt == '1':
-            print()
+            f.create_human_player()
         if opt == '2':
             print()
         if opt == '3':
@@ -56,8 +56,7 @@ while not flg_end:
             flg_02 = False
             flg_0 = True
     while flg_03:
-        print("En obras")
-        input()
+        f.check_conditions()
         flg_03 = False
         flg_0 = True
     while flg_04:

@@ -1,7 +1,7 @@
 import os
 import random
 from Paquetes import datos as d
-
+import sqlite3
 
 # Aqui guardamos las funciones.
 

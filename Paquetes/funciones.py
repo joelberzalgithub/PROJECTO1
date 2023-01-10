@@ -1,23 +1,33 @@
+import os
 import random
-import datos as d
+from Paquetes import datos as d
+
+
 # Aqui guardamos las funciones.
 
 
-def menu(menu_, opciones, excepciones=""):
+def menu(menu_, options, exceptions=""):
+    os.system("clear")
     print(menu_)
-    opt = input("\nOpcion: ")
+    opt = input("Option: ".rjust(62))
     try:
         if not opt.isdigit():
-            if not opt in excepciones:
-                raise TypeError("La opcion debe ser un numero.")
-        if int(opt) not in opciones:
-            if int(opt) not in excepciones:
-                raise ValueError("Opcion Invalida.")
+            if not opt in exceptions:
+                raise TypeError(("=" * 61) + "Invalid Option" + ("=" * 66))
+            elif opt.isspace() or opt == "":
+                raise TypeError(("=" * 61) + "Invalid Option" + ("=" * 66))
+        if opt not in options:
+            if opt not in exceptions:
+                raise ValueError(("=" * 61) + "Invalid Option" + ("=" * 66))
         return opt
     except TypeError as error:
-        print(error)
-        input("Pulsa enter para continuar.")
-        return menu(menu_, opciones, excepciones)
+        print("\n", error)
+        input("Press enter to continue".rjust(79))
+        return menu(menu_, options, exceptions)
+    except ValueError as error:
+        print("\n", error)
+        input("Press enter to continue".rjust(79))
+        return menu(menu_, options, exceptions)
 
 
 def barajar_mazo(mazo):
@@ -59,14 +69,14 @@ def set_game_priority(mazo):
                         d.context_game["game"][d.context_game["game"].index(i)]
             # Si la prioridad de la carta no es la misma, comparamos la prioridad
             else:
-                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] <\
+                if d.mazos[mazo_opt][d.players[i]["initialCard"]]["priority "] < \
                         d.mazos[mazo_opt][d.players[j]["initialCard"]]["priority "]:
                     d.context_game["game"][d.context_game["game"].index(i)], \
                     d.context_game["game"][d.context_game["game"].index(j)] = \
                         d.context_game["game"][d.context_game["game"].index(j)], \
                         d.context_game["game"][d.context_game["game"].index(i)]
     # Le asignamos a cada jugador su prioridad basada en su posicion en la lista de jugadores
-    for i in range (0, len(d.context_game["game"])):
+    for i in range(0, len(d.context_game["game"])):
         d.players[d.context_game["game"][i]]["priority"] = len(d.context_game["game"] - 1)
         # El que tiene mas prioridad (primero de la lista) es la banca
         if i == 0:
@@ -96,5 +106,3 @@ def check_minimum_2_player_with_points():
         return True
     else:
         return False
-
-

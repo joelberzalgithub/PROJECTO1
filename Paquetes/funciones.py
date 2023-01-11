@@ -131,3 +131,80 @@ def create_human_player_name():
         print(error)
         input("Enter to continue".rjust(56))
         return create_human_player_name()
+
+    
+def printPlayerStats(id):
+    # Creamos un print que imprimirá por pantalla todos los datos del diccionario "players" en función del NIF
+    print(
+        "name " + str(d.players[id]["name"]) + "\n" +
+        "type " + str(d.players[id]["type"]) + "\n" +
+        "human " + str(d.players[id]["human"]) + "\n" +
+        "bank " + str(d.players[id]["bank"]) + "\n" +
+        "initialCard " + str(d.players[id]["initialCard"]) + "\n" +
+        "priority " + str(d.players[id]["priority"]) + "\n" +
+        "bet " + str(d.players[id]["bet"]) + "\n" +
+        "points " + str(d.players[id]["points"]) + "\n" +
+        "cards " + str(d.players[id]["cards"]) + "\n" +
+        "raoundPoints " + str(d.players[id]["roundPoints"])
+    )
+    
+    
+def logToFile(text):
+    f = open("logfileSevenAndHalf.txt", "a")
+    f.write(text)
+    f.close()
+    
+    
+def addRemovePlayers():
+    try:
+        # Creamos un print que imprimirá por pantalla las opciones del menú
+        print("1)New Human Player\n2)New Boot\n3)Show/Remove Players\n4)Go back")
+        # Creamos un input que pedirá una de las 4 opciones
+        opt = input("Option:\n")
+        # Establecemos las condiciones del menú
+        if not opt.isdigit():
+            raise ValueError("Option must be numeric")
+        elif not int(opt) in range(1, 5):
+            raise ValueError("Option out of range")
+        else:
+            return int(opt)
+    except ValueError as error:
+        print(error)
+        input("Press any key to continue\n")
+        addRemovePlayers()   
+    
+    
+def settings():
+    try:
+        # Creamos un print que imprimirá por pantalla las opciones del menú
+        print("1)Set Game Players\n2)Set Card's Deck\n3)Set Max Rounds (Default 5 Rounds)\n4)Go back")
+        # Creamos un input que pedirá una de las 4 opciones
+        opt = input("Option:\n")
+        # Establecemos las condiciones del menú
+        if not opt.isdigit():
+            raise ValueError("Option must be numeric")
+        elif not int(opt) in range(1, 5):
+            raise ValueError("Option out of range")
+        else:
+            return int(opt)
+    except ValueError as error:
+        print(error)
+        input("Press any key to continue\n")
+        addRemovePlayers()
+        
+        
+def setMaxRounds():
+    try:
+        maxRounds = input("Rounds of the next game: ")
+        if maxRounds.isdigit() and int(maxRounds) in range(1, 31):
+            d.context_game.update({"maxRounds": maxRounds})
+        elif int(maxRounds) < 1:
+            raise ValueError("There can't be less than 1 round")
+        elif int(maxRounds) > 30:
+            raise ValueError("There can't be more than 30 rounds")
+        else:
+            raise ValueError("Rounds must be numeric")
+    except ValueError as error:
+        print(error)
+        setMaxRounds()
+        
